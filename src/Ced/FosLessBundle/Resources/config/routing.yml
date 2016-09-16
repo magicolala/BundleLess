@@ -1,3 +1,11 @@
 ced_fos_less_homepage:
     path:     /
     defaults: { _controller: CedFosLessBundle:Default:index }
+
+ced_fos_less_login:
+    path:     /login
+    defaults: { _controller: CedFosLessBundle:Default:login }
+
+login_check:
+    path:     /login
+    defaults: { _controller: CedFosLessBundle:Default:check }

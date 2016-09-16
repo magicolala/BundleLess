@@ -4,6 +4,8 @@ security:
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
+        main:
+            entity: { class: Ced\FosLessBundle\Entity\User, property: username }
         in_memory:
             memory: ~
 
@@ -13,8 +15,24 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
+        login:
+            pattern: ^/login$
+            security: false
+
         main:
-            anonymous: ~
+            pattern: ^/
+            form_login:
+                login_path: login
+                check_path: login_check
+            anonymous: true
+
+            logout:
+                path: /logout
+                target: /
+
+            remember_me:
+                key: "%secret%"
+                lifetime: 2232000
             # activate different ways to authenticate
 
             # http_basic: ~
@@ -22,3 +40,12 @@ security:
 
             # form_login: ~
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+    encoders:
+        MyNamespace\MyBundle\Entity\User:
+            algorithm: sha512
+            iterations: 7626
+            encode_as_base64: true
+    access_control:
+        - { path: ^/private/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/private, roles: ROLE_ADMIN }
+        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
