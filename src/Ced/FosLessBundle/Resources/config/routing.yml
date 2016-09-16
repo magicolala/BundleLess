@@ -1,0 +1,3 @@
+ced_fos_less_homepage:
+    path:     /
+    defaults: { _controller: CedFosLessBundle:Default:index }
